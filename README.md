@@ -4,11 +4,19 @@
 
 2.สร้างไฟล์ docker-compose.yml coppy จาก https://raw.githubusercontent.com/zkan/dpu-modern-data-pipelines/refs/heads/main/docker-compose.yaml
 
-3.สร้าง โฟเดอร์ เก็บงาน mkdir -p weather
+3.สร้าง ไฟล์/ โฟเดอร์  
+
+โฟเดอร์ 
+mkdir -p weather
+สร้าง ไฟล์
+.gitignore
+__pycache__
+logs
+*.json
 
 4.เปิดสิทธิ์ให้ docker เข้าถึงไฟล์  echo -e "AIRFLOW_UID=$(id -u)" > .env 
 
-5.docker compose up 
+5. run docker คำสั้ง docker compose up 
 
 6.API AQI
 
@@ -39,5 +47,33 @@
 
 10.load data to postgres
 
-11.
+11.dbt
 
+11.1 dbt init
+Enter a name for your project 
+Which database would you like to use?  เลือก postgres (1)
+host (hostname for the instance): localhost
+port [5432]
+user (dev username): postgres
+pass (dev password):
+dbname (default database that dbt will build objects in): postgres
+schema (default schema that dbt will build objects in): dbt_AQI
+threads (1 or more) [1]: 
+11.2 mv /home/codespace/.dbt/profiles.yml AQI/
+11.3  docker compse up
+
+11.4 dbt debug
+
+12.dbt run
+
+13._src.yml
+sources:
+  - name: AQI
+    database: postgres
+    schema: public
+    tables:
+      - name: pollution_data
+      - name: weather_data
+
+14. _models.yml
+dbt docs generate
