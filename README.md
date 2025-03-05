@@ -50,16 +50,27 @@ logs
 11.dbt
 
 11.1 dbt init
+
 Enter a name for your project 
+
 Which database would you like to use?  เลือก postgres (1)
+
 host (hostname for the instance): localhost
+
 port [5432]
+
 user (dev username): postgres
+
 pass (dev password):
+
 dbname (default database that dbt will build objects in): postgres
+
 schema (default schema that dbt will build objects in): dbt_AQI
+
 threads (1 or more) [1]: 
+
 11.2 mv /home/codespace/.dbt/profiles.yml AQI/
+
 11.3  docker compse up
 
 11.4 dbt debug
