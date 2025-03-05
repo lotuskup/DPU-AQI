@@ -76,4 +76,26 @@ sources:
       - name: weather_data
 
 14. _models.yml
-dbt docs generate
+
+version: 2
+
+models:
+  - name: stg_pollution_data
+    description: Staging pollution data is Air quality index (AQI⁺) and PM2.5 air pollution  
+    columns:
+      - name: id
+        description: integer Auto Increment
+      - name: timestamp
+        description: timestamp
+      - name: aqius
+        description: AQI value based on US EPA standard
+      - name: mainus
+        description: main pollutant for US AQI       
+      - name: aqicn
+        description: AQI value based on China MEP standard
+      - name: mainus
+        description: main pollutant for Chinese AQI  
+
+15. dbt docs generate
+
+16. dbt docs serve --port 9090
