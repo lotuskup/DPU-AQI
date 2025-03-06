@@ -1,37 +1,47 @@
 version: 2
 
 models:
-  - name: stg_pollution_data
-    description: Staging pollution data is Air quality index (AQI⁺) and PM2.5 air pollution  
-    columns:
-      - name: id
-        description: integer Auto Increment
-      - name: timestamp
-        description: timestamp
-      - name: aqius
-        description: AQI value based on US EPA standard
-      - name: mainus
-        description: main pollutant for US AQI       
-      - name: aqicn
-        description: AQI value based on China MEP standard
-      - name: mainus
-        description: main pollutant for Chinese AQI      
-  - name: stg_weather_data
-    description: Staging pollution data is Air quality index (AQI⁺) and PM2.5 air pollution  
-    columns:
-      - name: id
-        description: integer Auto Increment
-      - name: timestamp
-        description: timestamp
-      - name: temperature
-        description: Temperature (Celsius)
-      - name: pressure
-        description: Atmospheric pressure (hPa - hectopascals) 
-      - name: humidity
-        description: Relative humidity (%)
-      - name: wind_speed
-        description: Wind speed (meters per second)  
-      - name: wind_direction
-        description: Wind direction
-      - name: icon
-        description: Weather condition icon 
+- name: max_aqi_this_week
+  description: Retrieves the highest AQI (US standard) recorded in the current week.
+  columns: 
+    - name: max_aqi_us
+      description: Maximum AQI value recorded this week.
+- name: monthly_max_min_aqi
+  description: Retrieves the highest and lowest AQI (US standard) recorded for each month in the current year.
+  columns:
+    - name: month
+      description: Month of the AQI measurement.
+    - name: max_aqi_us
+      description: Maximum AQI value recorded in that month.
+    - name: min_aqi_us
+      description: Minimum AQI value recorded in that month.
+- name: weekly_aqi_comparison
+  description: Compares the average AQI (US standard) from the previous week to the current week.
+  columns:
+    - name: week
+      description: The start date of the week.
+    - name: avg_aqi_us
+      description: Average AQI value for the given week.
+    - name: prev_week_avg_aqi
+      description: Average AQI value of the previous week.
+    - name: change_from_last_week
+      description: Difference in AQI between this week and the previous week.
+- name: aqi_vs_humidity_last_week
+  description: Analyzes the correlation between AQI (US standard) and humidity in the past 7 days.
+  columns:
+    - name: timestamp
+      description: Timestamp of the AQI and humidity measurement.
+    - name: aqius
+      description: AQI value based on US EPA standard.
+    - name: humidity
+      description: Humidity percentage at the recorded timestamp.
+- name: max_aqi_during_storm
+  description: Retrieves the highest AQI recorded during storm conditions (wind speed > 20 m/s).
+  columns:
+    - name: max_aqi_during_storm
+      description: Maximum AQI recorded when wind speed exceeded 20 m/s.
+- name: avg_aqi_on_hot_days
+  description: Calculates the average AQI on days where the temperature exceeded 35°C.
+  columns:
+    - name: avg_aqi_hot_days
+      description: Average AQI recorded on days with temperatures above 35°C.
