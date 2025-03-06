@@ -1,0 +1,23 @@
+โจทย์
+Deliverables
+
+1. Project description
+
+2. Airflow DAG to extract, transform and load AQI data to a database
+(PostgreSQL for example)
+
+
+3. SQL statements you use to create your data models
+
+
+4. SQL statements you use to answer 5 business questions
+
+weekly_aqi_comparison.sql – ค่า AQI เฉลี่ยของสัปดาห์ที่แล้ว เปรียบเทียบกับสัปดาห์นี้
+monthly_max_min_aqi.sql – ค่า AQI สูงสุดและต่ำสุดของแต่ละเดือนในปีนี้
+max_aqi_this_week.sql – ค่า AQI สูงสุดในสัปดาห์นี้
+max_aqi_during_storm.sql – ค่า AQI สูงสุดในช่วงที่มีพายุ
+avg_aqi_on_hot_days.sql – ค่า AQI เฉลี่ยของวันที่มีอุณหภูมิสูงกว่า 35°C
+aqi_vs_humidity_last_week.sql – ความสัมพันธ์ระหว่าง AQI กับความชื้นในสัปดาห์ที่ผ่านมา
+
+5. All source code is pushed to your GitHub repo
+

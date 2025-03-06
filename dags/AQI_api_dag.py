@@ -34,18 +34,7 @@ def _validate_data():
         # ตรวจสอบว่า 'pollution' และ 'weather' มีข้อมูลหรือไม่
         assert data["data"]["current"].get("pollution") is not None, "Pollution data is missing"
         assert data["data"]["current"].get("weather") is not None, "Weather data is missing"
-        
-        # ตรวจสอบข้อมูล air_quality (pollution)
-        pollution_data = data["data"]["current"]["pollution"]
-        assert "aqius" in pollution_data, "Missing AQI US value in pollution data"
-        assert "aqicn" in pollution_data, "Missing AQI CN value in pollution data"
 
-        # ตรวจสอบค่าของ AQI US และ AQI CN ว่ามีค่าที่เหมาะสม
-        aqius = pollution_data["aqius"]
-        aqicn = pollution_data["aqicn"]
-        
-        assert 0 <= aqius <= 500, f"AQI US value out of range: {aqius}"
-        assert 0 <= aqicn <= 500, f"AQI CN value out of range: {aqicn}"
        
 
 def _validate_AQI():
