@@ -28,7 +28,7 @@ logs
 
 6.4 API  http://api.airvisual.com/v2/......"+ API_KEY
 
-7. validate data
+7. validate data  
    
 8. Connections and Hooks
 ให้เราไปที่เมนู Admin และเข้าไปที่ Connections
@@ -43,7 +43,7 @@ logs
 - Port: `5432`
 พอกรอกเสร็จ ก็ให้เรากดปุ่ม Save
   
-9.create table
+9.create table  
 
 10.load data to postgres
 
@@ -65,13 +65,13 @@ pass (dev password):
 
 dbname (default database that dbt will build objects in): postgres
 
-schema (default schema that dbt will build objects in): dbt_AQI
+schema (default schema that dbt will build objects in): xxx
 
 threads (1 or more) [1]: 
 
 11.2 mv /home/codespace/.dbt/profiles.yml AQI/
 
-11.3  docker compse up
+11.3  docker compse up  
 
 11.4 dbt debug
 

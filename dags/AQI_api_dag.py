@@ -3,10 +3,11 @@ import os
 from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.empty import EmptyOperator
+from airflow.operators.email import EmailOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.utils import timezone
-
+from datetime import timedelta
 import requests
 
 
@@ -42,6 +43,7 @@ def _validate_AQI():
         data = json.load(f)
 
         pollution_data = data["data"]["current"]["pollution"]
+        weather = data["data"]["current"]["weather"]
 
         # ตรวจสอบค่าของ AQI US และ AQI CN ว่ามีค่าที่เหมาะสม
         aqius = pollution_data["aqius"]
@@ -49,6 +51,17 @@ def _validate_AQI():
         
         assert 0 <= aqius <= 500, f"AQI US value out of range: {aqius}"
         assert 0 <= aqicn <= 500, f"AQI CN value out of range: {aqicn}"
+       
+        # ตรวจสอบค่าของอุณหภูมิ ความดัน ความชื้น และความเร็วลม
+        tp = weather["tp"]  # อุณหภูมิ (°C)
+        pr = weather["pr"]  # ความกดอากาศ (hPa)
+        hu = weather["hu"]  # ความชื้น (%)
+        ws = weather["ws"]  # ความเร็วลม (m/s)
+
+        assert 0 <= tp <= 60, f"Temperature out of range: {tp}"
+        assert 980 <= pr <= 1050, f"Pressure out of range: {pr}"
+        assert 0 <= hu <= 100, f"Humidity out of range: {hu}"
+        assert 0 <= ws <= 150, f"Wind speed out of range: {ws}"
        
 
 
@@ -172,6 +185,12 @@ def _load_weather_data_to_postgres():
     connection.close()
 
 
+default_args = {
+    "email": ["kan@odds.team"],
+    "retries": 3,
+    "retry_delay": timedelta(minutes=1),
+}
+
 
 with DAG(
     "AQI_api_dag",
@@ -216,7 +235,13 @@ with DAG(
         task_id="load_weather_data_to_postgres",
         python_callable=_load_weather_data_to_postgres,
     )
+    send_email = EmailOperator(
+        task_id="send_email",
+        to=["kanin.di@rice.mmail.go.th"],
+        subject="Finished getting open weather data",
+        html_content="Done",
+    )
     end = EmptyOperator(task_id="end")
 
-    start >> get_AQI_data >> [validate_data ,validate_AQI] >> load_pollution_data_to_postgres >> load_weather_data_to_postgres >> end
+    start >> get_AQI_data >> [validate_data ,validate_AQI] >> load_pollution_data_to_postgres >> load_weather_data_to_postgres >>send_email>> end
     start >> create_pollution_data_table >> create_weather_data_table >> load_pollution_data_to_postgres
