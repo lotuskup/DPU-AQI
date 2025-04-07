@@ -11,3 +11,4 @@ SELECT
 FROM weekly_data
 ORDER BY week DESC
 LIMIT 2
+/* ค่า AQI เฉลี่ยของสัปดาห์ที่แล้ว เปรียบเทียบกับสัปดาห์นี้ */

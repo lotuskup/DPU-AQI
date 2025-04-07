@@ -5,3 +5,4 @@ FROM {{ source('AQI','pollution_data')}}
 WHERE timestamp >= DATE_TRUNC('year', NOW())
 GROUP BY month
 ORDER BY month
+/* ค่า AQI สูงสุด/ต่ำสุดในแต่ละเดือนของปีนี้ */
